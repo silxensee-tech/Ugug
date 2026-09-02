@@ -2,17 +2,19 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>iQOO CLICKER</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>iQOO Turbo Clicker</title>
   <style>
     :root {
-      --primary: #f08b18;
-      --primary-glow: rgba(240, 139, 24, 0.4);
-      --bg: #edf0f5;
-      --card-bg: rgba(255, 255, 255, 0.85);
-      --border: #d4dbe6;
-      --text: #1b212d;
-      --text-muted: #626c7e;
+      --bg: #090c13;
+      --card-bg: rgba(22, 28, 43, 0.75);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --primary: #ff7700;
+      --primary-glow: #ff770066;
+      --accent: #ffd000;
+      --cyan: #00e5ff;
+      --text-main: #f8fafc;
+      --text-muted: #8492a6;
     }
 
     * {
@@ -21,235 +23,464 @@
       padding: 0;
       user-select: none;
       -webkit-user-select: none;
+      touch-action: manipulation;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     }
 
     body {
-      background: radial-gradient(circle at center, #ffffff 0%, var(--bg) 100%);
-      color: var(--text);
+      background: radial-gradient(circle at 50% 20%, #1c1938 0%, var(--bg) 70%);
+      color: var(--text-main);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: space-between;
       overflow-x: hidden;
-      padding: 20px 15px;
+      padding: 16px 12px;
     }
 
-    header {
+    .top-bar {
+      width: 100%;
+      max-width: 460px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       background: var(--card-bg);
-      border: 1px solid var(--border);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--card-border);
       border-radius: 20px;
-      padding: 10px 30px;
-      font-weight: 800;
-      font-size: 1.1rem;
-      letter-spacing: 0.5px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-      margin-bottom: 20px;
+      padding: 10px 18px;
     }
 
-    .container {
-      display: grid;
-      grid-template-columns: 280px 1fr 280px;
-      gap: 25px;
-      width: 100%;
-      max-width: 1100px;
-      align-items: center;
-    }
-
-    @media (max-width: 900px) {
-      .container {
-        grid-template-columns: 1fr;
-        max-width: 450px;
-      }
-    }
-
-    .panel {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 24px;
-      padding: 20px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.04);
-      backdrop-filter: blur(8px);
-    }
-
-    .panel-title {
+    .brand-title {
+      font-weight: 900;
       font-size: 0.95rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      text-align: center;
-      margin-bottom: 15px;
-      letter-spacing: 0.5px;
+      letter-spacing: 1px;
+      background: linear-gradient(90deg, #fff, var(--cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
-    .btn-upgrade {
-      width: 100%;
-      background: #f8fafc;
-      border: 1px solid var(--border);
-      padding: 12px;
-      border-radius: 14px;
-      margin-bottom: 10px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      transition: all 0.2s ease;
-    }
-
-    .btn-upgrade:hover:not(:disabled) {
-      background: #ffffff;
-      border-color: var(--primary);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px var(--primary-glow);
-    }
-
-    .btn-upgrade:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-
-    .stat-row {
-      background: #f8fafc;
-      border: 1px solid var(--border);
-      padding: 12px;
+    .rank-badge {
+      background: rgba(255, 119, 0, 0.15);
+      border: 1px solid rgba(255, 119, 0, 0.4);
+      padding: 4px 12px;
       border-radius: 12px;
-      margin-bottom: 10px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      display: flex;
-      justify-content: space-between;
-    }
-
-    .note {
       font-size: 0.75rem;
-      color: var(--text-muted);
-      text-align: center;
-      margin-top: 15px;
-      line-height: 1.3;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
     }
 
-    .click-area {
+    .score-container {
       display: flex;
       flex-direction: column;
       align-items: center;
-      position: relative;
+      margin: 10px 0 5px;
     }
 
-    .avatar-wrapper {
-      position: relative;
-      width: 270px;
-      height: 270px;
-      border-radius: 50%;
-      padding: 8px;
-      background: linear-gradient(135deg, var(--primary), #ffe6b0);
-      box-shadow: 0 0 40px var(--primary-glow);
-      cursor: pointer;
-      transition: transform 0.08s ease;
-      touch-action: manipulation;
-    }
-
-    .avatar-wrapper:active {
-      transform: scale(0.94);
-    }
-
-    .avatar-img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 50%;
-      display: block;
-      pointer-events: none;
-    }
-
-    .floating-text {
-      position: absolute;
+    .score-value {
+      font-size: 3rem;
       font-weight: 900;
-      font-size: 1.6rem;
-      color: var(--primary);
-      pointer-events: none;
-      animation: floatUp 0.8s ease-out forwards;
-      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      letter-spacing: -1px;
+      color: #fff;
+      text-shadow: 0 0 30px rgba(255, 153, 0, 0.45);
     }
 
-    @keyframes floatUp {
-      0% { opacity: 1; transform: translateY(0); }
-      100% { opacity: 0; transform: translateY(-70px) scale(1.2); }
-    }
-
-    .score-display {
-      margin-top: 25px;
-      text-align: center;
-    }
-
-    .score-title {
-      font-size: 1.8rem;
-      font-weight: 900;
-      letter-spacing: -0.5px;
-    }
-
-    .sub-score {
-      font-size: 1.1rem;
-      font-weight: 700;
+    .score-sub {
+      display: flex;
+      gap: 15px;
+      font-size: 0.82rem;
+      font-weight: 600;
       color: var(--text-muted);
       margin-top: 4px;
+    }
+
+    .score-sub span {
+      color: var(--cyan);
+    }
+
+    /* Зона клика */
+    .tap-area {
+      perspective: 1000px;
+      margin: auto 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .tap-card {
+      width: 250px;
+      height: 250px;
+      border-radius: 50%;
+      position: relative;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.08s ease-out;
+      transform-style: preserve-3d;
+    }
+
+    .tap-card::before {
+      content: '';
+      position: absolute;
+      inset: -10px;
+      border-radius: 50%;
+      background: conic-gradient(from 0deg, var(--primary), var(--accent), var(--cyan), var(--primary));
+      animation: rotateRing 8s linear infinite;
+      z-index: 1;
+      filter: blur(10px);
+      opacity: 0.7;
+    }
+
+    @keyframes rotateRing {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .avatar {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      z-index: 3;
+      border: 4px solid #090c13;
+      pointer-events: none;
+      background: #181d2a;
+    }
+
+    /* Кнопка смены фото */
+    .file-label {
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 6px 14px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .file-label:hover {
+      background: rgba(255, 255, 255, 0.15);
+      color: #fff;
+    }
+
+    #file-input {
+      display: none;
+    }
+
+    .float-num {
+      position: fixed;
+      font-size: 2rem;
+      font-weight: 900;
+      color: #fff;
+      text-shadow: 0 0 12px var(--primary), 0 0 24px var(--accent);
+      pointer-events: none;
+      z-index: 999;
+      animation: flyUp 0.75s cubic-bezier(0.1, 0.8, 0.2, 1) forwards;
+    }
+
+    @keyframes flyUp {
+      0% { opacity: 1; transform: translate(-50%, 0) scale(0.9); }
+      50% { transform: translate(-50%, -60px) scale(1.2); }
+      100% { opacity: 0; transform: translate(-50%, -100px) scale(0.8); }
+    }
+
+    .stamina-wrapper {
+      width: 100%;
+      max-width: 460px;
+      margin: 10px 0;
+    }
+
+    .stamina-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .stamina-bar {
+      width: 100%;
+      height: 9px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--card-border);
+    }
+
+    .stamina-fill {
+      height: 100%;
+      width: 100%;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      box-shadow: 0 0 10px var(--primary);
+      transition: width 0.1s ease;
+    }
+
+    .upgrade-grid {
+      width: 100%;
+      max-width: 460px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
+    }
+
+    .btn-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 10px 6px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+      color: var(--text-main);
+      backdrop-filter: blur(10px);
+      transition: all 0.2s;
+    }
+
+    .btn-card:hover:not(:disabled) {
+      border-color: rgba(255, 119, 0, 0.5);
+      background: rgba(30, 38, 58, 0.9);
+    }
+
+    .btn-card:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+
+    .btn-name {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    .btn-val {
+      font-size: 0.85rem;
+      font-weight: 900;
+      color: var(--cyan);
+    }
+
+    .btn-price {
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: var(--accent);
+      background: rgba(255, 208, 0, 0.12);
+      padding: 2px 8px;
+      border-radius: 8px;
     }
   </style>
 </head>
 <body>
 
-  <header>iQOO CLICKER — Локальная Версия (Без БД)</header>
+  <div class="top-bar">
+    <div class="brand-title">iQOO TURBO PRO</div>
+    <div class="rank-badge" id="rank-text">Bronze</div>
+  </div>
 
-  <main class="container">
-    <div class="panel">
-      <div class="panel-title">Локальные улучшения</div>
-      <button class="btn-upgrade" id="btn-click-upgrade">
-        <span>+1 к клику</span>
-        <strong id="cost-click">10</strong>
-      </button>
-      <button class="btn-upgrade" id="btn-auto-upgrade">
-        <span>Авто-кликер (в сек)</span>
-        <strong id="cost-auto">50</strong>
-      </button>
-      <button class="btn-upgrade" id="btn-boost">
-        <span>Удвоение на 15 сек</span>
-        <strong id="cost-boost">200</strong>
-      </button>
-      <p class="note">*Все улучшения сохраняются в памяти браузера (LocalStorage).*</p>
+  <div class="score-container">
+    <div class="score-value" id="score-text">0</div>
+    <div class="score-sub">
+      <div>СИЛА: <span id="power-text">1</span></div>
+      <div>АВТО: <span id="cps-text">0</span>/сек</div>
+      <div>ТАПОВ: <span id="total-text">0</span></div>
     </div>
+  </div>
 
-    <div class="click-area">
-      <div class="avatar-wrapper" id="tapper">
-        <img src="photo.jpg" alt="Clicker Target" class="avatar-img">
-      </div>
-
-      <div class="score-display">
-        <div class="score-title">ОЧКОВ: <span id="score-text">0</span></div>
-        <div class="sub-score">МОНЕТ: <span id="coins-text">0</span></div>
-      </div>
+  <div class="tap-area">
+    <div class="tap-card" id="tap-target">
+      <img src="photo.jpg" alt="Target" class="avatar" id="avatar-img">
     </div>
+    
+    <label class="file-label" for="file-input">
+      📷 Выбрать фото
+      <input type="file" id="file-input" accept="image/*">
+    </label>
+  </div>
 
-    <div class="panel">
-      <div class="panel-title">Текущие достижения</div>
-      <div class="stat-row">
-        <span>Кликов в секунду (CPS):</span>
-        <span id="cps-text">0</span>
-      </div>
-      <div class="stat-row">
-        <span>Всего кликов:</span>
-        <span id="total-clicks-text">0</span>
-      </div>
-      <div class="stat-row">
-        <span>Сила клика:</span>
-        <span id="power-text">1</span>
-      </div>
-      <p class="note">*База данных не используется. Прогресс закреплен за этим устройством.*</p>
+  <div class="stamina-wrapper">
+    <div class="stamina-header">
+      <span>ЭНЕРГИЯ</span>
+      <span><b id="energy-text" style="color:#fff;">1000</b> / <span id="max-energy-text">1000</span></span>
     </div>
-  </main>
+    <div class="stamina-bar">
+      <div class="stamina-fill" id="energy-bar"></div>
+    </div>
+  </div>
+
+  <div class="upgrade-grid">
+    <button class="btn-card" id="up-click">
+      <div class="btn-name">Клик</div>
+      <div class="btn-val">+1 Сила</div>
+      <div class="btn-price" id="cost-click">25</div>
+    </button>
+    <button class="btn-card" id="up-auto">
+      <div class="btn-name">Авто-тап</div>
+      <div class="btn-val">+2 /сек</div>
+      <div class="btn-price" id="cost-auto">100</div>
+    </button>
+    <button class="btn-card" id="up-energy">
+      <div class="btn-name">Запас</div>
+      <div class="btn-val">+500 Max</div>
+      <div class="btn-price" id="cost-energy">150</div>
+    </button>
+  </div>
 
   <script>
-    // Инициализация состояния из LocalStorage
+    function getStored(key, def) {
+      const v = localStorage.getItem('iqoo_' + key);
+      if (v === null) return def;
+      const num = Number(v);
+      return isNaN(num) ? def : num;
+    }
+
     const state = {
-      score: Number(localStorage.getItem('tapper_score')) || 0,
-      totalClicks: Number(localStorage.getItem('tapper_totalClicks')) ||
+      score: getStored('score', 0),
+      totalClicks: getStored('total', 0),
+      clickPower: getStored('power', 1),
+      autoRate: getStored('auto', 0),
+      energy: getStored('energy', 1000),
+      maxEnergy: getStored('maxEnergy', 1000),
+      costClick: getStored('c_click', 25),
+      costAuto: getStored('c_auto', 100),
+      costEnergy: getStored('c_energy', 150)
+    };
+
+    // Загрузка сохранённого фото
+    const avatarImg = document.getElementById('avatar-img');
+    const savedPhoto = localStorage.getItem('iqoo_user_photo');
+    if (savedPhoto) {
+      avatarImg.src = savedPhoto;
+    }
+
+    // Обработчик выбора файла
+    document.getElementById('file-input').addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(evt) {
+          const result = evt.target.result;
+          avatarImg.src = result;
+          localStorage.setItem('iqoo_user_photo', result);
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    function save() {
+      localStorage.setItem('iqoo_score', Math.floor(state.score));
+      localStorage.setItem('iqoo_total', state.totalClicks);
+      localStorage.setItem('iqoo_power', state.clickPower);
+      localStorage.setItem('iqoo_auto', state.autoRate);
+      localStorage.setItem('iqoo_energy', Math.floor(state.energy));
+      localStorage.setItem('iqoo_maxEnergy', state.maxEnergy);
+      localStorage.setItem('iqoo_c_click', state.costClick);
+      localStorage.setItem('iqoo_c_auto', state.costAuto);
+      localStorage.setItem('iqoo_c_energy', state.costEnergy);
+    }
+
+    function render() {
+      document.getElementById('score-text').textContent = Math.floor(state.score).toLocaleString();
+      document.getElementById('power-text').textContent = '+' + state.clickPower;
+      document.getElementById('cps-text').textContent = state.autoRate;
+      document.getElementById('total-text').textContent = state.totalClicks.toLocaleString();
+
+      const eFloor = Math.floor(state.energy);
+      document.getElementById('energy-text').textContent = eFloor;
+      document.getElementById('max-energy-text').textContent = state.maxEnergy;
+      document.getElementById('energy-bar').style.width = ((eFloor / state.maxEnergy) * 100) + '%';
+
+      document.getElementById('cost-click').textContent = state.costClick;
+      document.getElementById('cost-auto').textContent = state.costAuto;
+      document.getElementById('cost-energy').textContent = state.costEnergy;
+
+      document.getElementById('up-click').disabled = state.score < state.costClick;
+      document.getElementById('up-auto').disabled = state.score < state.costAuto;
+      document.getElementById('up-energy').disabled = state.score < state.costEnergy;
+    }
+
+    function createFloatNum(x, y, val) {
+      const el = document.createElement('div');
+      el.className = 'float-num';
+      el.textContent = '+' + val;
+      el.style.left = `${x}px`;
+      el.style.top = `${y}px`;
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 750);
+    }
+
+    const target = document.getElementById('tap-target');
+
+    target.addEventListener('pointerdown', (e) => {
+      e.preventDefault();
+      if (state.energy < state.clickPower) return;
+
+      state.score += state.clickPower;
+      state.energy -= state.clickPower;
+      state.totalClicks++;
+
+      createFloatNum(e.clientX, e.clientY, state.clickPower);
+
+      const rect = target.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      const tiltX = (e.clientY - centerY) / 8;
+      const tiltY = -(e.clientX - centerX) / 8;
+
+      target.style.transform = `scale(0.95) rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
+      setTimeout(() => {
+        target.style.transform = 'scale(1) rotateX(0deg) rotateY(0deg)';
+      }, 90);
+
+      render();
+    });
+
+    document.getElementById('up-click').addEventListener('click', () => {
+      if (state.score >= state.costClick) {
+        state.score -= state.costClick;
+        state.clickPower += 1;
+        state.costClick = Math.floor(state.costClick * 1.5);
+        render();
+        save();
+      }
+    });
+
+    document.getElementById('up-auto').addEventListener('click', () => {
+      if (state.score >= state.costAuto) {
+        state.score -= state.costAuto;
+        state.autoRate += 2;
+        state.costAuto = Math.floor(state.costAuto * 1.6);
+        render();
+        save();
+      }
+    });
+
+    document.getElementById('up-energy').addEventListener('click', () => {
+      if (state.score >= state.costEnergy) {
+        state.score -= state.costEnergy;
+        state.maxEnergy += 500;
+        state.energy += 500;
+        state.costEnergy = Math.floor(state.costEnergy * 1.7);
+        render();
+        save();
+      }
+    });
+
+    setInterval(() => {
+      let changed = false;
+      if (state.autoRate > 0) {
+        state.score += state.autoRate / 10;
+        changed = true;
+      }
+      if (state.energy < state.maxEnergy) {
+        state.energy = Math.min(state.maxEnergy, state.energy + 0
