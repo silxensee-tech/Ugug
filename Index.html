@@ -15,7 +15,6 @@
       --cyan: #00e5ff;
       --text-main: #f8fafc;
       --text-muted: #8492a6;
-      --green: #00ff88;
     }
 
     * {
@@ -25,7 +24,7 @@
       user-select: none;
       -webkit-user-select: none;
       touch-action: manipulation;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     }
 
     body {
@@ -37,13 +36,12 @@
       align-items: center;
       justify-content: space-between;
       overflow-x: hidden;
-      padding: 18px 12px;
+      padding: 16px 12px;
     }
 
-    /* Верхняя панель инфо */
     .top-bar {
       width: 100%;
-      max-width: 480px;
+      max-width: 460px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -52,7 +50,6 @@
       border: 1px solid var(--card-border);
       border-radius: 20px;
       padding: 10px 18px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     }
 
     .brand-title {
@@ -65,7 +62,7 @@
     }
 
     .rank-badge {
-      background: linear-gradient(135deg, rgba(255, 119, 0, 0.2), rgba(255, 208, 0, 0.2));
+      background: rgba(255, 119, 0, 0.15);
       border: 1px solid rgba(255, 119, 0, 0.4);
       padding: 4px 12px;
       border-radius: 12px;
@@ -75,23 +72,19 @@
       text-transform: uppercase;
     }
 
-    /* Главный счётчик */
     .score-container {
       display: flex;
       flex-direction: column;
       align-items: center;
-      margin: 15px 0 5px;
+      margin: 10px 0 5px;
     }
 
     .score-value {
-      font-size: 3.2rem;
+      font-size: 3rem;
       font-weight: 900;
       letter-spacing: -1px;
       color: #fff;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      text-shadow: 0 0 35px rgba(255, 153, 0, 0.45);
+      text-shadow: 0 0 30px rgba(255, 153, 0, 0.45);
     }
 
     .score-sub {
@@ -107,16 +100,19 @@
       color: var(--cyan);
     }
 
-    /* 3D-Тапалка */
+    /* Зона клика */
     .tap-area {
       perspective: 1000px;
       margin: auto 0;
-      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
     }
 
     .tap-card {
-      width: 270px;
-      height: 270px;
+      width: 250px;
+      height: 250px;
       border-radius: 50%;
       position: relative;
       cursor: pointer;
@@ -130,26 +126,18 @@
     .tap-card::before {
       content: '';
       position: absolute;
-      inset: -12px;
+      inset: -10px;
       border-radius: 50%;
       background: conic-gradient(from 0deg, var(--primary), var(--accent), var(--cyan), var(--primary));
       animation: rotateRing 8s linear infinite;
       z-index: 1;
-      filter: blur(12px);
+      filter: blur(10px);
       opacity: 0.7;
     }
 
     @keyframes rotateRing {
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
-    }
-
-    .tap-inner-ring {
-      position: absolute;
-      inset: -3px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--accent), var(--primary));
-      z-index: 2;
     }
 
     .avatar {
@@ -164,7 +152,31 @@
       background: #181d2a;
     }
 
-    /* Всплывающие цифры */
+    /* Кнопка смены фото */
+    .file-label {
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 6px 14px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .file-label:hover {
+      background: rgba(255, 255, 255, 0.15);
+      color: #fff;
+    }
+
+    #file-input {
+      display: none;
+    }
+
     .float-num {
       position: fixed;
       font-size: 2rem;
@@ -173,20 +185,19 @@
       text-shadow: 0 0 12px var(--primary), 0 0 24px var(--accent);
       pointer-events: none;
       z-index: 999;
-      animation: flyUp 0.8s cubic-bezier(0.1, 0.8, 0.2, 1) forwards;
+      animation: flyUp 0.75s cubic-bezier(0.1, 0.8, 0.2, 1) forwards;
     }
 
     @keyframes flyUp {
       0% { opacity: 1; transform: translate(-50%, 0) scale(0.9); }
       50% { transform: translate(-50%, -60px) scale(1.2); }
-      100% { opacity: 0; transform: translate(-50%, -110px) scale(0.8); }
+      100% { opacity: 0; transform: translate(-50%, -100px) scale(0.8); }
     }
 
-    /* Статус энергии */
     .stamina-wrapper {
       width: 100%;
-      max-width: 480px;
-      margin: 15px 0 10px;
+      max-width: 460px;
+      margin: 10px 0;
     }
 
     .stamina-header {
@@ -200,7 +211,7 @@
 
     .stamina-bar {
       width: 100%;
-      height: 10px;
+      height: 9px;
       background: rgba(255, 255, 255, 0.08);
       border-radius: 8px;
       overflow: hidden;
@@ -212,13 +223,12 @@
       width: 100%;
       background: linear-gradient(90deg, var(--primary), var(--accent));
       box-shadow: 0 0 10px var(--primary);
-      transition: width 0.15s ease;
+      transition: width 0.1s ease;
     }
 
-    /* Блок апгрейдов */
     .upgrade-grid {
       width: 100%;
-      max-width: 480px;
+      max-width: 460px;
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
       gap: 8px;
@@ -228,7 +238,7 @@
       background: var(--card-bg);
       border: 1px solid var(--card-border);
       border-radius: 16px;
-      padding: 10px 8px;
+      padding: 10px 6px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -236,11 +246,7 @@
       cursor: pointer;
       color: var(--text-main);
       backdrop-filter: blur(10px);
-      transition: all 0.2s ease;
-    }
-
-    .btn-card:active {
-      transform: scale(0.96);
+      transition: all 0.2s;
     }
 
     .btn-card:hover:not(:disabled) {
@@ -249,16 +255,14 @@
     }
 
     .btn-card:disabled {
-      opacity: 0.4;
+      opacity: 0.35;
       cursor: not-allowed;
-      filter: grayscale(0.8);
     }
 
     .btn-name {
       font-size: 0.72rem;
       font-weight: 700;
       color: var(--text-muted);
-      text-align: center;
     }
 
     .btn-val {
@@ -274,21 +278,18 @@
       background: rgba(255, 208, 0, 0.12);
       padding: 2px 8px;
       border-radius: 8px;
-      margin-top: 2px;
     }
   </style>
 </head>
 <body>
 
   <div class="top-bar">
-    <div class="brand-title">iQOO Z10 PRO</div>
-    <div class="rank-badge" id="rank-text">Bronze I</div>
+    <div class="brand-title">iQOO TURBO PRO</div>
+    <div class="rank-badge" id="rank-text">Bronze</div>
   </div>
 
   <div class="score-container">
-    <div class="score-value">
-      <span id="score-text">0</span>
-    </div>
+    <div class="score-value" id="score-text">0</div>
     <div class="score-sub">
       <div>СИЛА: <span id="power-text">1</span></div>
       <div>АВТО: <span id="cps-text">0</span>/сек</div>
@@ -297,3 +298,189 @@
   </div>
 
   <div class="tap-area">
+    <div class="tap-card" id="tap-target">
+      <img src="photo.jpg" alt="Target" class="avatar" id="avatar-img">
+    </div>
+    
+    <label class="file-label" for="file-input">
+      📷 Выбрать фото
+      <input type="file" id="file-input" accept="image/*">
+    </label>
+  </div>
+
+  <div class="stamina-wrapper">
+    <div class="stamina-header">
+      <span>ЭНЕРГИЯ</span>
+      <span><b id="energy-text" style="color:#fff;">1000</b> / <span id="max-energy-text">1000</span></span>
+    </div>
+    <div class="stamina-bar">
+      <div class="stamina-fill" id="energy-bar"></div>
+    </div>
+  </div>
+
+  <div class="upgrade-grid">
+    <button class="btn-card" id="up-click">
+      <div class="btn-name">Клик</div>
+      <div class="btn-val">+1 Сила</div>
+      <div class="btn-price" id="cost-click">25</div>
+    </button>
+    <button class="btn-card" id="up-auto">
+      <div class="btn-name">Авто-тап</div>
+      <div class="btn-val">+2 /сек</div>
+      <div class="btn-price" id="cost-auto">100</div>
+    </button>
+    <button class="btn-card" id="up-energy">
+      <div class="btn-name">Запас</div>
+      <div class="btn-val">+500 Max</div>
+      <div class="btn-price" id="cost-energy">150</div>
+    </button>
+  </div>
+
+  <script>
+    function getStored(key, def) {
+      const v = localStorage.getItem('iqoo_' + key);
+      if (v === null) return def;
+      const num = Number(v);
+      return isNaN(num) ? def : num;
+    }
+
+    const state = {
+      score: getStored('score', 0),
+      totalClicks: getStored('total', 0),
+      clickPower: getStored('power', 1),
+      autoRate: getStored('auto', 0),
+      energy: getStored('energy', 1000),
+      maxEnergy: getStored('maxEnergy', 1000),
+      costClick: getStored('c_click', 25),
+      costAuto: getStored('c_auto', 100),
+      costEnergy: getStored('c_energy', 150)
+    };
+
+    // Загрузка сохранённого фото
+    const avatarImg = document.getElementById('avatar-img');
+    const savedPhoto = localStorage.getItem('iqoo_user_photo');
+    if (savedPhoto) {
+      avatarImg.src = savedPhoto;
+    }
+
+    // Обработчик выбора файла
+    document.getElementById('file-input').addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(evt) {
+          const result = evt.target.result;
+          avatarImg.src = result;
+          localStorage.setItem('iqoo_user_photo', result);
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    function save() {
+      localStorage.setItem('iqoo_score', Math.floor(state.score));
+      localStorage.setItem('iqoo_total', state.totalClicks);
+      localStorage.setItem('iqoo_power', state.clickPower);
+      localStorage.setItem('iqoo_auto', state.autoRate);
+      localStorage.setItem('iqoo_energy', Math.floor(state.energy));
+      localStorage.setItem('iqoo_maxEnergy', state.maxEnergy);
+      localStorage.setItem('iqoo_c_click', state.costClick);
+      localStorage.setItem('iqoo_c_auto', state.costAuto);
+      localStorage.setItem('iqoo_c_energy', state.costEnergy);
+    }
+
+    function render() {
+      document.getElementById('score-text').textContent = Math.floor(state.score).toLocaleString();
+      document.getElementById('power-text').textContent = '+' + state.clickPower;
+      document.getElementById('cps-text').textContent = state.autoRate;
+      document.getElementById('total-text').textContent = state.totalClicks.toLocaleString();
+
+      const eFloor = Math.floor(state.energy);
+      document.getElementById('energy-text').textContent = eFloor;
+      document.getElementById('max-energy-text').textContent = state.maxEnergy;
+      document.getElementById('energy-bar').style.width = ((eFloor / state.maxEnergy) * 100) + '%';
+
+      document.getElementById('cost-click').textContent = state.costClick;
+      document.getElementById('cost-auto').textContent = state.costAuto;
+      document.getElementById('cost-energy').textContent = state.costEnergy;
+
+      document.getElementById('up-click').disabled = state.score < state.costClick;
+      document.getElementById('up-auto').disabled = state.score < state.costAuto;
+      document.getElementById('up-energy').disabled = state.score < state.costEnergy;
+    }
+
+    function createFloatNum(x, y, val) {
+      const el = document.createElement('div');
+      el.className = 'float-num';
+      el.textContent = '+' + val;
+      el.style.left = `${x}px`;
+      el.style.top = `${y}px`;
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 750);
+    }
+
+    const target = document.getElementById('tap-target');
+
+    target.addEventListener('pointerdown', (e) => {
+      e.preventDefault();
+      if (state.energy < state.clickPower) return;
+
+      state.score += state.clickPower;
+      state.energy -= state.clickPower;
+      state.totalClicks++;
+
+      createFloatNum(e.clientX, e.clientY, state.clickPower);
+
+      const rect = target.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      const tiltX = (e.clientY - centerY) / 8;
+      const tiltY = -(e.clientX - centerX) / 8;
+
+      target.style.transform = `scale(0.95) rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
+      setTimeout(() => {
+        target.style.transform = 'scale(1) rotateX(0deg) rotateY(0deg)';
+      }, 90);
+
+      render();
+    });
+
+    document.getElementById('up-click').addEventListener('click', () => {
+      if (state.score >= state.costClick) {
+        state.score -= state.costClick;
+        state.clickPower += 1;
+        state.costClick = Math.floor(state.costClick * 1.5);
+        render();
+        save();
+      }
+    });
+
+    document.getElementById('up-auto').addEventListener('click', () => {
+      if (state.score >= state.costAuto) {
+        state.score -= state.costAuto;
+        state.autoRate += 2;
+        state.costAuto = Math.floor(state.costAuto * 1.6);
+        render();
+        save();
+      }
+    });
+
+    document.getElementById('up-energy').addEventListener('click', () => {
+      if (state.score >= state.costEnergy) {
+        state.score -= state.costEnergy;
+        state.maxEnergy += 500;
+        state.energy += 500;
+        state.costEnergy = Math.floor(state.costEnergy * 1.7);
+        render();
+        save();
+      }
+    });
+
+    setInterval(() => {
+      let changed = false;
+      if (state.autoRate > 0) {
+        state.score += state.autoRate / 10;
+        changed = true;
+      }
+      if (state.energy < state.maxEnergy) {
+        state.energy = Math.min(state.maxEnergy, state.energy + 0
